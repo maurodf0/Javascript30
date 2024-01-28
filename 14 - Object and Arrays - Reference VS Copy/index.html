@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+    const team = players;
+    // You might think we can just do something like this:
+    team[3] = 'Lux';
+    console.log(players);
+    // however what happens when we update that array?
+
+    // now here is the problem!
+
+    // oh no - we have edited the original array too!
+
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+
+    //without passing nothing in slice we have a copy of the same array
+    const team2 = players.slice();
+    console.log(team2);
+    // one way
+
+    // or create a new array and concat the old one in
+    const team3 = [].concat(players);
+
+    // or use the new ES6 Spread (best way)
+    const team4 = [...players];
+
+    //or
+
+    const team5 = Array.from(players);
+
+    // now when we update it, the original one isn't changed
+
+
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // and think we make a copy:
+    //this is a reference no t a copy
+    const captain = person;
+
+    // how do we take a copy instead?
+   const cap2 = Object.assign({}, person, {number:99, age: 12});
+   console.log(cap2);
+
+    // We will hopefully soon see the object ...spread
+    const cap3 = {...person};
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+    const mauro = {
+        name: 'Mauro',
+        age: 27,
+        social: {
+            ig: '_maurodf',
+            fb: 'Mauro'
+        }
+    };
+    console.log(mauro);
+
+    const dev = Object.assign({}, mauro);
+    dev.name = 'Another Mauro';
+    console.log(dev);
+    //this gave an error for the copy of the sub object, a solution can be stringify all the object
+    const mauro2 = JSON.parse(JSON.stringify(mauro));
+    console.log(mauro2);
+    mauro2.name = 'M';
+    mauro2.social.ig = 'nothing found';
+    console.log(mauro2);
+
+  </script>
+
+</body>
+</html>
